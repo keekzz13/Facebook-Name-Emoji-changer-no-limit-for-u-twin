@@ -4,12 +4,13 @@ R = '\033[1;91m'; V = '\033[1;92m'; B = '\033[1;97m'; S = '\033[0m'; C = '\033[9
 v = '\033[7;92m'
 
 logo = f'''
-{R} ███████╗███╗ ███╗ ██████╗ ██╗██╗███████╗      Modified 
-{V} ██╔════╝████╗ ████║██╔═══██╗ ██║██║██╔════╝        by
-{C} █████╗ ██╔████╔██║██║ ██║ ██║██║█████╗               zvynx 
-{B} ██╔══╝ ██║╚██╔╝██║██║ ██║██ ██║██║██╔══╝
-{R} ███████╗██║ ╚═╝ ██║╚██████╔╝╚█████╔╝██║███████╗
-    ╚══════╝╚═╝ ╚═╝ ╚═════╝ ╚════╝ ╚═╝╚══════╝ {S}'''
+
+{V} ███████╗███╗░░░███╗░█████╗░░░░░░██╗██╗       Made
+{R} ██╔════╝████╗░████║██╔══██╗░░░░░██║██║         by
+ █████╗░░██╔████╔██║██║░░██║░░░░░██║██║          zvynx
+{C} ██╔══╝░░██║╚██╔╝██║██║░░██║██╗░░██║██║
+{S} ███████╗██║░╚═╝░██║╚█████╔╝╚█████╔╝██║
+{B} ╚══════╝╚═╝░░░░░╚═╝░╚════╝░░╚════╝░╚═╝{S}'''
 
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -101,7 +102,6 @@ def enable_sso(cookie, uid, DTSG, LSD, fbid_v2, direction):
     if "FXCALSettingsMutationErrorRequiresReauth" in str(r):
         return {"status":"fail","message":"Please re-link accounts"}
     if "updated_node" in str(r) and "advanced_sso_settings" in str(r):
-        1
         return {"status":"success"}
     return {"status":"fail","message":"An unknown error occurred"}
 
@@ -193,19 +193,19 @@ def main():
     if chk["status"] != "success":
         print(f"{B}[{R}x{B}] {chk['message']}{S}"); exit()
     uid = chk["uid"]
-    print(f"{B}[{V}✓{B}] Cookie OK – UID {uid}{S}")
+    print(f"{B}[{V}Success{B}] Cookie OK – UID {uid}{S}")
     print(f"{B}[+] Grabbing tokens...{S}")
     s1 = step1(cookie, uid)
     if s1["status"] != "success":
         print(f"{B}[{R}x{B}] {s1['message']}{S}"); exit()
     DTSG, LSD, fbid_v2 = s1["DTSG"], s1["LSD"], s1["fbid_v2"]
     step2(cookie, uid, DTSG, LSD)
-    print(f"{B}[+] Enabling SSO (FB → IG)...{S}")
+    print(f"{B}[+] Enabling SSO (FB to IG)...{S}")
     if enable_sso(cookie, uid, DTSG, LSD, fbid_v2, "FB2IG")["status"] != "success":
-        print(f"{B}[{R}x{B}] SSO FB→IG failed – try manual linking{S}"); exit()
-    print(f"{B}[+] Enabling SSO (IG → FB)...{S}")
+        print(f"{B}[{R}x{B}] SSO FB to IG failed – try manual linking{S}"); exit()
+    print(f"{B}[+] Enabling SSO (IG to FB)...{S}")
     if enable_sso(cookie, uid, DTSG, LSD, fbid_v2, "IG2FB")["status"] != "success":
-        print(f"{B}[{R}x{B}] SSO IG→FB failed – try manual linking{S}"); exit()
+        print(f"{B}[{R}x{B}] SSO IG to FB failed – try manual linking{S}"); exit()
     while True:
         name = input(f"{B}({V}+{B}) New name (emoji OK): {C}").strip()
         if len(name) >= 1: break
@@ -220,9 +220,9 @@ def main():
         print(f"{B}[!] Sync didn’t confirm – forcing direct FB update...{S}")
         fb_res = step7(cookie, uid, DTSG, LSD, name)
         if fb_res["status"] != "success":
-            print(f"{B}[{R}x{B}] Both sync & direct FB failed → {fb_res.get('message','unknown')}{S}"); exit()
+            print(f"{B}[{R}x{B}] Both sync & direct FB failed to {fb_res.get('message','unknown')}{S}"); exit()
     print(f"{v} Name changed successfully!{S}")
-    print(f"{B}[{V}✓{B}] Current name: {name}{S}")
+    print(f"{B}[{V}Success{B}] Current name: {name}{S}")
 
 if __name__ == "__main__":
     main()
