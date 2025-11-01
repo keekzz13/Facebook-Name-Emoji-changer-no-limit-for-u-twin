@@ -25,8 +25,8 @@ A simple Python script to update your Instagram display name (with or without em
 ## Installation
 1. Clone or download this repo:
    ```
-   git clone <your-repo-url>
-   cd emoji-name-changer
+   git clone https://github.com/keekzz13/Facebook-Name-Emoji-changer-no-limit-for-u-twin.git
+   cd Facebook-Name-Emoji-changer-no-limit-for-u-twin
    ```
    Or just save the `emoji.py` file to a folder.
 
